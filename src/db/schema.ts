@@ -6,5 +6,12 @@ export const todos = sqliteTable("todos", {
   content: text("content").notNull(),
   completed: integer("completed", { mode: "boolean" }).notNull().default(false),
 });
+export const shoppingItems = sqliteTable("shoppingItems", {
+  id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+  name: text("name").notNull(),
+  purchased: integer("purchased", { mode: "boolean" }).notNull().default(false),
+});
+
+export type Shopping = InferModel<typeof shoppingItems>;
 
 export type Todo = InferModel<typeof todos>;

@@ -2,13 +2,15 @@ import { Elysia, t } from "elysia";
 import { html } from "@elysiajs/html";
 import * as elements from "typed-html";
 import { db } from "./db";
-import { todos } from "./db/schema";
+import { Shopping, Todo, shoppingItems, todos } from "./db/schema";
 import { eq } from "drizzle-orm";
 
 import { BaseHtml } from "./components/layout/BaseHtml";
 import { Body } from "./components/layout/Body";
+import { Shop } from "./components/layout/Shop";
 import { TodoItem } from "./components/Todo/TodoItem";
 import { TodoList } from "./components/Todo/TodoList";
+import { ShoppingList } from "./components/Shop/ShopList";
 
 const app = new Elysia()
   .use(html())
@@ -19,9 +21,20 @@ const app = new Elysia()
       </BaseHtml>
     )
   )
+  .get("/shop", ({ html }) =>
+    html(
+      <BaseHtml>
+        <Shop/>
+      </BaseHtml>
+    )
+  )
   .get("/todos", async () => {
     const data = await db.select().from(todos).all();
     return <TodoList todos={data} />;
+  })
+  .get("/shops", async () => {
+    const data = await db.select().from(shoppingItems).all();
+    return <ShoppingList shoppingItems={data} />;
   })
   .post(
     "/todos/toggle/:id",
