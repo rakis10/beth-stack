@@ -33,5 +33,6 @@
     "@libsql/client": "^0.5.2",
     "drizzle-orm": "^0.29.4",
     "elysia": "^0.5.25"
-  }
+  },
+  "trustedDependencies": ["@libsql/linux-x64-gnu"]
 }
